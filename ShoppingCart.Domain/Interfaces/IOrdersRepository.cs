@@ -8,7 +8,6 @@ namespace ShoppingCart.Domain.Interfaces
 {
     public interface IOrdersRepository
     {
-
         IQueryable<Order> GetProducts();
         Order GetProduct(int id);
         void DeleteProduct(Order o);

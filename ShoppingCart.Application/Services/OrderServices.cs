@@ -6,9 +6,7 @@ using ShoppingCart.Data.Repositories;
 using ShoppingCart.Domain.Interfaces;
 using ShoppingCart.Domain.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ShoppingCart.Application.Services
 {

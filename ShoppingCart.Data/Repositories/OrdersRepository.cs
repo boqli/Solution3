@@ -6,8 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-
 
 namespace ShoppingCart.Data.Repositories
 {
@@ -37,7 +35,6 @@ namespace ShoppingCart.Data.Repositories
             //ShoppingCartDbContext context = new ShoppingCartDbContext();
             return _context.Orders;
         }
-
 
     }
 
