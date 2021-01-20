@@ -1,0 +1,15 @@
+﻿@model IEnumerable<ShoppingCart.Application.ViewModels.OrderViewModel>
+
+@{ ViewData["Title"] = "Index"; }
+<h1 class="text-center">Shopping Cart</h1><br/>
+<h2 class="text-center">Order Summary</h2>
+
+<form asp-action="Checkout">
+    <div class="row">
+        @foreach (var p in Model)
+        {
+
+        }
+    </div>
+</form>
+
