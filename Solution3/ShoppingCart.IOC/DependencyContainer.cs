@@ -42,9 +42,10 @@ namespace ShoppingCart.IOC
             services.AddScoped<IMembersRepository, MembersRepository>();
             services.AddScoped<IMembersService, MembersService>();
 
+            services.AddScoped<IOrdersRepository, OrdersRepository>();
+            services.AddScoped<IOrdersService, OrderServices>();
 
             //Move Initialization of ShoppingCartDbContext to here and refine the dependencies
-
 
             services.AddAutoMapper(typeof(AutoMapperConfiguration));
             AutoMapperConfiguration.RegisterMappings();

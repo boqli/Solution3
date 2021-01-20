@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
+using ShoppingCart.Data.Context;
+using ShoppingCart.Domain.Models;
 
 namespace PresentationWebApp.Controllers
 {
@@ -14,13 +16,15 @@ namespace PresentationWebApp.Controllers
     {
         private readonly IProductsService _productsService;
         private readonly ICategoriesService _categoriesService;
+        private readonly ShoppingCartDbContext _cartDBContext;
         private IWebHostEnvironment _env;
         public ProductsController(IProductsService productsService, ICategoriesService categoriesService,
-             IWebHostEnvironment env )
+             IWebHostEnvironment env, ShoppingCartDbContext cartDBContext)
         {
             _productsService = productsService;
             _categoriesService = categoriesService;
             _env = env;
+            _cartDBContext = cartDBContext;
         }
 
         public IActionResult Index()
@@ -55,6 +59,12 @@ namespace PresentationWebApp.Controllers
 
             return View();
         }
+
+        [HttpPost]
+       // public IActionResult AddToOrder(Product product)
+       // {
+           
+       // }
 
         //here details input by the user will be received
         [HttpPost]
@@ -97,22 +107,23 @@ namespace PresentationWebApp.Controllers
         } //fiddler, burp, zap, postman
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Delete(Guid id)
+        public IActionResult Disable(Guid id)
         {
             try
             {
-                _productsService.DeleteProduct(id);
+                _productsService.DisableProduct(id);
                 TempData["feedback"] = "Product was deleted";
             }
             catch (Exception ex)
             {
-                //log your error 
-
+                //log your error S
                 TempData["warning"] = "Product was not deleted" + ex; //Change from ViewData to TempData
             }
 
             return RedirectToAction("Index");
         }
+
+
 
 
 

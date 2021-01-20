@@ -16,7 +16,7 @@ namespace ShoppingCart.Application.Services
     {
         private IMapper _mapper;
         private IProductsRepository _productsRepo;
-        public ProductsService(IProductsRepository productsRepository, IMapper mapper)
+        public ProductsService(IProductsRepository productsRepository,IMapper mapper)
         {
             _mapper = mapper;
             _productsRepo = productsRepository;
@@ -93,7 +93,7 @@ namespace ShoppingCart.Application.Services
         public IQueryable<ProductViewModel> GetProducts(string keyword)
         {
 
-            var products = _productsRepo.GetProducts().Where(x => x.Description.Contains(keyword) || x.Name.Contains(keyword))
+            var products = _productsRepo.GetProducts().Where(x=>x.Description.Contains(keyword) || x.Name.Contains(keyword))
                 .ProjectTo<ProductViewModel>(_mapper.ConfigurationProvider);
             return products;
 
