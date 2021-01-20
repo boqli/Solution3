@@ -13,6 +13,8 @@ namespace ShoppingCart.Domain.Models
 
         public virtual Product Product { get; set; }
 
+
+
         [Required]
         public Guid ProductFK { get; set; }
 
