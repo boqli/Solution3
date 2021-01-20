@@ -8,7 +8,6 @@ namespace ShoppingCart.Domain.Models
 {
     public class Order
     {
-
         [Key]
         public Guid Id { get; set; }
 

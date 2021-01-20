@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
 using ShoppingCart.Data.Repositories;
@@ -11,15 +12,14 @@ namespace ShoppingCart.Application.Services
 {
     public class OrderServices : IOrdersService
     {
-
         private IMapper _mapper;
         private IOrdersRepository _ordersRepo;
-        private IOrderDetailsRepository _orderDetailsRepo;
-        public OrderServices(IOrdersRepository ordersRepository, IOrderDetailsRepository orderDetailsRepository, IMapper mapper)
+        //private IOrderDetailsRepository _orderDetailsRepo;
+        public OrderServices(IOrdersRepository ordersRepository, IMapper mapper)
         {
             _mapper = mapper;
             _ordersRepo = ordersRepository;
-            _orderDetailsRepo = orderDetailsRepository;
+            //_orderDetailsRepo = orderDetailsRepository;
         }
         /*
          * 1)approach - storing items in cart table in db
@@ -46,7 +46,7 @@ namespace ShoppingCart.Application.Services
             //if you find a producy with qty > stock - retun false
 
             //3. Create order
-            Guid orderId =Guid.NewGuid();
+            Guid orderId = Guid.NewGuid();
             Order o = new Order();
             o.Id = orderId;
             //continue setting up other properties
@@ -62,7 +62,7 @@ namespace ShoppingCart.Application.Services
             //END LOOP
 
             //5. Call the AddOrder from inside the IOrderRepository (_ordersRepo) (this can be merged with step 3)
-            
+
             //6. Call the AddOrderDetails from inside the IOrderRepository (_ordersRepo) (this can be merged with step 4)
         }
 
@@ -106,11 +106,10 @@ namespace ShoppingCart.Application.Services
         {
             //throw new NotImplementedException();
         }
-        
+
         public OrderViewModel AddOrder(OrderViewModel order)
         {
             throw new NotImplementedException();
         }
-
     }
 }

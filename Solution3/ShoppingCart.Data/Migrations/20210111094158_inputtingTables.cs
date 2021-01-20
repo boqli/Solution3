@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoppingCart.Data.Migrations
 {
-    public partial class ahdemuwejja : Migration
+    public partial class tryingOrder : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,7 +37,8 @@ namespace ShoppingCart.Data.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     DatePlaced = table.Column<DateTime>(nullable: false),
                     UserEmail = table.Column<string>(nullable: true)
                 },
@@ -71,26 +72,6 @@ namespace ShoppingCart.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cart",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductFk = table.Column<Guid>(nullable: false),
-                    Email = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cart", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cart_Products_ProductFk",
-                        column: x => x.ProductFk,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrderDetails",
                 columns: table => new
                 {
@@ -101,7 +82,7 @@ namespace ShoppingCart.Data.Migrations
                     Quantity = table.Column<int>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Disable = table.Column<bool>(nullable: false),
-                    OrderId = table.Column<Guid>(nullable: false)
+                    OrderId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -121,11 +102,6 @@ namespace ShoppingCart.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cart_ProductFk",
-                table: "Cart",
-                column: "ProductFk");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderId",
                 table: "OrderDetails",
                 column: "OrderId");
@@ -143,9 +119,6 @@ namespace ShoppingCart.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Cart");
-
             migrationBuilder.DropTable(
                 name: "Members");
 

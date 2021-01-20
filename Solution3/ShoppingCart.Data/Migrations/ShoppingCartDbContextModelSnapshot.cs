@@ -19,26 +19,6 @@ namespace ShoppingCart.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ShoppingCart.Domain.Models.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ProductFk")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductFk");
-
-                    b.ToTable("Cart");
-                });
-
             modelBuilder.Entity("ShoppingCart.Domain.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -75,9 +55,10 @@ namespace ShoppingCart.Data.Migrations
 
             modelBuilder.Entity("ShoppingCart.Domain.Models.Order", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DatePlaced")
                         .HasColumnType("datetime2");
@@ -100,8 +81,8 @@ namespace ShoppingCart.Data.Migrations
                     b.Property<bool>("Disable")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -159,15 +140,6 @@ namespace ShoppingCart.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("ShoppingCart.Domain.Models.Cart", b =>
-                {
-                    b.HasOne("ShoppingCart.Domain.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductFk")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ShoppingCart.Domain.Models.OrderDetails", b =>

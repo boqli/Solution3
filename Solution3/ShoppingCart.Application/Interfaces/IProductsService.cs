@@ -8,6 +8,7 @@ namespace ShoppingCart.Application.Interfaces
 {
     public interface IProductsService
     {
+
         IQueryable<ProductViewModel> GetProducts();
 
         IQueryable<ProductViewModel> GetProducts(int category);
@@ -21,6 +22,5 @@ namespace ShoppingCart.Application.Interfaces
         void DeleteProduct(Guid id);
 
         void DisableProduct(Guid id);
-        
     }
 }

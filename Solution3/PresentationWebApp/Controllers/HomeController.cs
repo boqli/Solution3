@@ -20,7 +20,7 @@ namespace PresentationWebApp.Controllers
 
         public IActionResult Index()
         {
-            _logger.LogInformation("Started Index Method");
+            //......
             return View();
         }
 
