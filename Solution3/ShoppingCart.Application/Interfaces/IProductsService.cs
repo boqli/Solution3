@@ -1,4 +1,5 @@
 ﻿using ShoppingCart.Application.ViewModels;
+using ShoppingCart.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace ShoppingCart.Application.Interfaces
         ProductViewModel GetProduct(Guid id);
 
         void AddProduct(ProductViewModel product);
+
+        void AddProduct(Product product);
 
         void DeleteProduct(Guid id);
 

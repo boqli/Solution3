@@ -18,7 +18,7 @@ namespace ShoppingCart.Application.ViewModels
 
         public DateTime DateCreated { get; set; }
 
-        public virtual Product Product { get; set; }
+        public virtual ProductViewModel Product { get; set; }
 
         public Guid ProductFk { get; set; }
 

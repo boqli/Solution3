@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoppingCart.Data.Migrations
 {
-    public partial class AddingCart : Migration
+    public partial class something : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -127,39 +127,37 @@ namespace ShoppingCart.Data.Migrations
                 {
                     ItemId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CartId = table.Column<int>(nullable: true),
                     CartIdFK = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: true),
                     ProductFk = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CartItems", x => x.ItemId);
                     table.ForeignKey(
-                        name: "FK_CartItems_Carts_CartId",
-                        column: x => x.CartId,
+                        name: "FK_CartItems_Carts_CartIdFK",
+                        column: x => x.CartIdFK,
                         principalTable: "Carts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CartItems_Products_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_CartItems_Products_ProductFk",
+                        column: x => x.ProductFk,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItems_CartId",
+                name: "IX_CartItems_CartIdFK",
                 table: "CartItems",
-                column: "CartId");
+                column: "CartIdFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItems_ProductId",
+                name: "IX_CartItems_ProductFk",
                 table: "CartItems",
-                column: "ProductId");
+                column: "ProductFk");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_ProductId",

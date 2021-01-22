@@ -24,20 +24,13 @@ namespace ShoppingCart.Application.Services
 
         public void AddProduct(ProductViewModel product)
         {
-            //changing this using automapper later on
+            var myProduct = _mapper.Map<Product>(product);
+            myProduct.Category = null;
+            _productsRepo.AddProduct(myProduct);
+        }
 
-            //Converting from
-            //ProductViewModel >> Product
-            /* Product newProduct = new Product()
-             {
-                 Description = product.Description,
-                 Name = product.Name,
-                 Price = product.Price,
-                 CategoryId = product.Category.Id,
-                 ImageUrl = product.ImageUrl
-             };
-            */
-
+        public void AddProduct(Product product)
+        {
             var myProduct = _mapper.Map<Product>(product);
             myProduct.Category = null;
             _productsRepo.AddProduct(myProduct);
@@ -51,7 +44,6 @@ namespace ShoppingCart.Application.Services
             {
                 _productsRepo.DeleteProduct(pToDelete);
             }
-
         }
 
         public void DisableProduct(Guid id)
@@ -69,26 +61,9 @@ namespace ShoppingCart.Application.Services
         public ProductViewModel GetProduct(Guid id)
         {
             //AutoMapper
-
             var myProduct = _productsRepo.GetProduct(id);
             var result = _mapper.Map<ProductViewModel>(myProduct);
             return result;
-
-            /*
-             ProductViewModel myModel = new ProductViewModel();
-            myModel.Description = myProduct.Description;
-            myModel.ImageUrl = myProduct.ImageUrl;
-            myModel.Name = myProduct.Name;
-            myModel.Price = myProduct.Price;
-            myModel.Id = myProduct.Id;
-            myModel.Category = new CategoryViewModel()
-            {
-                Id = myProduct.Category.Id,
-                Name = myProduct.Category.Name
-            };
-
-            return myModel;
-            */
         }
 
         public IQueryable<ProductViewModel> GetProducts()

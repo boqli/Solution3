@@ -47,7 +47,6 @@ namespace ShoppingCart.IOC
             services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
             services.AddScoped<IOrderDetailsService, OrderDetailsService>();
 
-
             services.AddScoped<IOrdersRepository, OrdersRepository>();
             services.AddScoped<IOrdersService, OrderService>();
 

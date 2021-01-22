@@ -8,20 +8,23 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
+using ShoppingCart.Domain.Models;
 
 namespace PresentationWebApp.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly IProductsService _productsService;
+        private readonly ICartService _cartService;
         private readonly ICategoriesService _categoriesService;
         private IWebHostEnvironment _env;
-        public ProductsController(IProductsService productsService, ICategoriesService categoriesService,
+        public ProductsController(IProductsService productsService, ICategoriesService categoriesService, ICartService cartService,
              IWebHostEnvironment env )
         {
             _productsService = productsService;
             _categoriesService = categoriesService;
             _env = env;
+            _cartService = cartService;
         }
 
         public IActionResult Index()
@@ -38,7 +41,7 @@ namespace PresentationWebApp.Controllers
             var list = _productsService.GetProducts(keyword);
             return View("Index", list);
         }
-
+        //use this for cartitem view model return cartviewmodel
         public IActionResult Details(Guid id)
         {
             var p = _productsService.GetProduct(id);
@@ -136,10 +139,6 @@ namespace PresentationWebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult AddToCart(Guid id)
-        {
-            return RedirectToAction("Index");
-        }
 
         [HttpPost]
         public IActionResult searchByCategory(int category)
@@ -150,6 +149,10 @@ namespace PresentationWebApp.Controllers
 
             return View("Index", list);
         }
+
+
+
+        
 
 
     }

@@ -17,12 +17,17 @@ namespace ShoppingCart.Data.Repositories
             _context = context;
 
         }
-
+        
+        public IQueryable<CartItem> AddItem(CartItem ci)
+        {
+            _context.CartItems.Add(ci);
+            _context.SaveChanges();
+            return _context.CartItems;
+        }
 
         public IQueryable<Cart> GetItems()
         {
             return _context.Carts;
         }
-
     }
 }
