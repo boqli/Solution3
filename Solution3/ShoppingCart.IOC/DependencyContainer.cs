@@ -29,6 +29,8 @@ namespace ShoppingCart.IOC
 
             //Shortcut key Ctrl+.
 
+            //TO CREATE PAGES COME HERE
+
             services.AddDbContext<ShoppingCartDbContext>(options =>
                 options.UseSqlServer(connectionString )
                 );
@@ -42,10 +44,18 @@ namespace ShoppingCart.IOC
             services.AddScoped<IMembersRepository, MembersRepository>();
             services.AddScoped<IMembersService, MembersService>();
 
+            services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
+            services.AddScoped<IOrderDetailsService, OrderDetailsService>();
+
+
             services.AddScoped<IOrdersRepository, OrdersRepository>();
-            services.AddScoped<IOrdersService, OrderServices>();
+            services.AddScoped<IOrdersService, OrderService>();
+
+            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<ICartService, CartService>();
 
             //Move Initialization of ShoppingCartDbContext to here and refine the dependencies
+
 
             services.AddAutoMapper(typeof(AutoMapperConfiguration));
             AutoMapperConfiguration.RegisterMappings();

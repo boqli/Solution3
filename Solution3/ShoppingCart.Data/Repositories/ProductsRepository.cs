@@ -18,7 +18,7 @@ namespace ShoppingCart.Data.Repositories
             _context = context;
 
         }
-         
+
         public Guid AddProduct(Product p)
         {
             //ShoppingCartDbContext context = new ShoppingCartDbContext();
@@ -36,7 +36,7 @@ namespace ShoppingCart.Data.Repositories
 
         public void DisableProduct(Guid id)
         {
-            var p =GetProduct(id);
+            var p = GetProduct(id);
             p.Disable = true;
             _context.SaveChanges();
         }

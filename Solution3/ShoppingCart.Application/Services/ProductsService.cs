@@ -16,7 +16,7 @@ namespace ShoppingCart.Application.Services
     {
         private IMapper _mapper;
         private IProductsRepository _productsRepo;
-        public ProductsService(IProductsRepository productsRepository,IMapper mapper)
+        public ProductsService(IProductsRepository productsRepository, IMapper mapper)
         {
             _mapper = mapper;
             _productsRepo = productsRepository;
@@ -53,6 +53,7 @@ namespace ShoppingCart.Application.Services
             }
 
         }
+
         public void DisableProduct(Guid id)
         {
             var pToDisable = _productsRepo.GetProduct(id);
@@ -90,10 +91,17 @@ namespace ShoppingCart.Application.Services
             */
         }
 
+        public IQueryable<ProductViewModel> GetProducts()
+        {
+            //AutoMapper
+            var products = _productsRepo.GetProducts().ProjectTo<ProductViewModel>(_mapper.ConfigurationProvider);
+            return products;
+        }
+
         public IQueryable<ProductViewModel> GetProducts(string keyword)
         {
 
-            var products = _productsRepo.GetProducts().Where(x=>x.Description.Contains(keyword) || x.Name.Contains(keyword))
+            var products = _productsRepo.GetProducts().Where(x => x.Description.Contains(keyword) || x.Name.Contains(keyword))
                 .ProjectTo<ProductViewModel>(_mapper.ConfigurationProvider);
             return products;
 
@@ -102,27 +110,11 @@ namespace ShoppingCart.Application.Services
 
         public IQueryable<ProductViewModel> GetProducts(int category)
         {
-            var list = from p in _productsRepo.GetProducts().Where(x => x.Category.Id == category)
-                       select new ProductViewModel()
-                       {
-                           Id = p.Id,
-                           Description = p.Description,
-                           Name = p.Name,
-                           Price = p.Price,
-                           Category = new CategoryViewModel() { Id = p.Category.Id, Name = p.Category.Name },
-                           ImageUrl = p.ImageUrl
-                       };
-            return list;
-
-        }
-
-        public IQueryable<ProductViewModel> GetProducts()
-        {
-            var products = _productsRepo.GetProducts().ProjectTo<ProductViewModel>(_mapper.ConfigurationProvider);
+            var products = _productsRepo.GetProducts().Where(x => x.CategoryId.Equals(category))
+                .ProjectTo<ProductViewModel>(_mapper.ConfigurationProvider);
             return products;
 
         }
-
 
     }
 }

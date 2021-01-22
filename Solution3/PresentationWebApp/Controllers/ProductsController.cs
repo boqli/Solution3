@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
-using ShoppingCart.Data.Context;
-using ShoppingCart.Domain.Models;
 
 namespace PresentationWebApp.Controllers
 {
@@ -16,20 +15,20 @@ namespace PresentationWebApp.Controllers
     {
         private readonly IProductsService _productsService;
         private readonly ICategoriesService _categoriesService;
-        private readonly ShoppingCartDbContext _cartDBContext;
         private IWebHostEnvironment _env;
         public ProductsController(IProductsService productsService, ICategoriesService categoriesService,
-             IWebHostEnvironment env, ShoppingCartDbContext cartDBContext)
+             IWebHostEnvironment env )
         {
             _productsService = productsService;
             _categoriesService = categoriesService;
             _env = env;
-            _cartDBContext = cartDBContext;
         }
 
         public IActionResult Index()
         {
             var list = _productsService.GetProducts();
+            var listOfCategeories = _categoriesService.GetCategories();
+            ViewBag.Categories = listOfCategeories;
             return View(list);
         }
 
@@ -59,12 +58,6 @@ namespace PresentationWebApp.Controllers
 
             return View();
         }
-
-        [HttpPost]
-       // public IActionResult AddToOrder(Product product)
-       // {
-           
-       // }
 
         //here details input by the user will be received
         [HttpPost]
@@ -107,16 +100,17 @@ namespace PresentationWebApp.Controllers
         } //fiddler, burp, zap, postman
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Disable(Guid id)
+        public IActionResult Delete(Guid id)
         {
             try
             {
-                _productsService.DisableProduct(id);
+                _productsService.DeleteProduct(id);
                 TempData["feedback"] = "Product was deleted";
             }
             catch (Exception ex)
             {
-                //log your error S
+                //log your error 
+
                 TempData["warning"] = "Product was not deleted" + ex; //Change from ViewData to TempData
             }
 
@@ -124,8 +118,38 @@ namespace PresentationWebApp.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
+        public IActionResult DisableProduct(Guid id)
+        {
+            try
+            {
+                _productsService.DisableProduct(id);
+                TempData["feedback"] = "Product was disabled";
+            }
+            catch (Exception ex)
+            {
+                //log your error 
 
+                TempData["warning"] = "Product was not disabled" + ex; //Change from ViewData to TempData
+            }
 
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult AddToCart(Guid id)
+        {
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult searchByCategory(int category)
+        {
+            var list = _productsService.GetProducts(category);
+            var listOfCategeories = _categoriesService.GetCategories();
+            ViewBag.Categories = listOfCategeories;
+
+            return View("Index", list);
+        }
 
 
     }

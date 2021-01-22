@@ -23,5 +23,6 @@ namespace ShoppingCart.Domain.Interfaces
         Order GetOrder(Order o);
 
         Order AddOder(Order o);
+
     }
 }

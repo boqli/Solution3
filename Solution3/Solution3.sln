@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{4ED9B2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IOC", "IOC", "{C2BD1D69-E614-44C4-BE9D-A80F9BA07B0D}"
 	ProjectSection(SolutionItems) = preProject
-		ShoppingCart.Domain\Models\OrderDetails.cs = ShoppingCart.Domain\Models\OrderDetails.cs
+		ShoppingCart.Domain\Models\Cart.cs = ShoppingCart.Domain\Models\Cart.cs
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCart.Domain", "ShoppingCart.Domain\ShoppingCart.Domain.csproj", "{2C505758-6D90-460D-B6A7-C09CFF7B26BA}"

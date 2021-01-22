@@ -6,6 +6,7 @@ namespace ShoppingCart.Application.Interfaces
 {
     public interface IOrdersService
     {
+
         void Checkout(string email);
 
         IQueryable<OrderViewModel> GetProducts();
@@ -14,9 +15,10 @@ namespace ShoppingCart.Application.Interfaces
 
         void DeleteProduct(Guid id);
 
-       //OrderViewModel GetOrder(string email);
+        //OrderViewModel GetOrder(string email);
 
         OrderViewModel AddOrder(OrderViewModel order);
+
 
     }
 }

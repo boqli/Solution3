@@ -8,6 +8,8 @@ namespace ShoppingCart.Data.Context
 {
     public class ShoppingCartDbContext : DbContext
     {
+        internal object products;
+
         public ShoppingCartDbContext(DbContextOptions options) : base(options)
         { }
 
@@ -21,7 +23,9 @@ namespace ShoppingCart.Data.Context
 
         public DbSet<OrderDetails> OrderDetails { get; set; }
 
-        public DbSet<Cart> Cart { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+
+        public DbSet<CartItem> CartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
