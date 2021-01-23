@@ -39,8 +39,11 @@ namespace PresentationWebApp.Controllers
         public IActionResult Search(string keyword) //using a form, and the drop down select list must have name attribute = to category
         {
             var list = _productsService.GetProducts(keyword);
+            var listOfCategeories = _categoriesService.GetCategories();
+            ViewBag.Categories = listOfCategeories;
             return View("Index", list);
         }
+
         //use this for cartitem view model return cartviewmodel
         public IActionResult Details(Guid id)
         {

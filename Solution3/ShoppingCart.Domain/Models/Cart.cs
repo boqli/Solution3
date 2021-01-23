@@ -11,6 +11,8 @@ namespace ShoppingCart.Domain.Models
 
         [Key]
         public int Id { get; set; }
+        
+        public virtual List<CartItem> CartItems { get; set; }
 
         [Required]
         public string Email { get; set; }

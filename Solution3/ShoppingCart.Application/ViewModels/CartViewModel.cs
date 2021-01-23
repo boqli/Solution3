@@ -11,7 +11,7 @@ namespace ShoppingCart.Application.ViewModels
 
         public virtual Product Product { get; set; }
 
-        public Guid ProductFk { get; set; }
+        public IEnumerable<CartItemViewModel> CartItems { get; set; }
 
         public string Email { get; set; }
 

@@ -28,7 +28,7 @@ namespace PresentationWebApp.Controllers
 
         public IActionResult Index()
         {
-            var list = _cartService.GetItems();
+            var list = _cartService.GetItems().FirstOrDefault();
             return View(list);
         }
         /*
@@ -52,7 +52,7 @@ namespace PresentationWebApp.Controllers
             try
             {
                 var cart = _productsService.GetProduct(id);
-                //var cart = GetCart(); implmement
+                //var cartId= GetCart(); implmement
 
                 var cartItem = new CartItemViewModel()
                 {
@@ -73,7 +73,7 @@ namespace PresentationWebApp.Controllers
                 TempData["warning"] = "Product was not added! " + ex;
             }
 
-            return View("Index");
+            return RedirectToAction("Index","Products");
         }
 
         //once checkout() is done move cart to order then remove from cart

@@ -1,8 +1,32 @@
-﻿@model IEnumerable<ShoppingCart.Application.ViewModels.CartViewModel>
+﻿@model ShoppingCart.Application.ViewModels.CartViewModel
 
 @{ ViewData["Title"] = "Index"; }
 
 <h1>Order Summary</h1>
+<br />
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Total</th>
+            <th scope="col">Remove</th>
 
-@Html.Partial("ViewCartPartial", Model)
+        </tr>
+    </thead>
+    </tbody>
+@foreach (var p in Model.CartItems)
+{ 
+        <tr>
+            <th scope="col"><img src="@p.Product.ImageUrl" class="card-img-top image"></th>
+            <th scope="col">@p.Product.Name</th> <!-- maybe make clickable to go to details?-->
+            <th scope="col">@p.Quantity</th>
+            <th scope="col">@p.Product.Price</th>
+        </tr>
+}
+    </tbody>
+</table>
+
 
