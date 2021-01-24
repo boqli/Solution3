@@ -39,7 +39,7 @@ namespace ShoppingCart.Application.Services
          */
 
 
-        public void Checkout(string email)
+        public bool Checkout(string email)
         {
             // IF NOT STORING PRODUCTS LIST IN DATABASE, PASS LIST ( List<CartViewModel> )
             //1. Get a list of products that have been added to the cart for given email from the db
@@ -67,6 +67,8 @@ namespace ShoppingCart.Application.Services
             //5. Call the AddOrder from inside the IOrderRepository (_ordersRepo) (this can be merged with step 3)
 
             //6. Call the AddOrderDetails from inside the IOrderRepository (_ordersRepo) (this can be merged with step 4)
+
+            return true;
         }
 
         public void DeleteProduct(Guid id)
@@ -100,8 +102,8 @@ namespace ShoppingCart.Application.Services
 
         public void AddProduct(OrderViewModel order)
         {
-            var myOrder = _mapper.Map<Order>(order);
-            _ordersRepo.AddOder(myOrder);
+            var myOrder = _mapper.Map<OrderViewModel,Order>(order);
+            _ordersRepo.AddOrder(myOrder);
         }
 
         //OrderViewModel minflok void
@@ -110,9 +112,10 @@ namespace ShoppingCart.Application.Services
             //throw new NotImplementedException();
         }
 
-        public OrderViewModel AddOrder(OrderViewModel order)
+        public void AddOrder(OrderViewModel order)
         {
-            throw new NotImplementedException();
+            var myOrder = _mapper.Map<OrderViewModel, Order>(order);
+            _ordersRepo.AddOrder(myOrder);
         }
     }
 }

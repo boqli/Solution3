@@ -11,12 +11,12 @@
             <th scope="col">Product</th>
             <th scope="col">Quantity</th>
             <th scope="col">Price</th>
-            <th scope="col">Total</th>
             <th scope="col">Remove</th>
 
         </tr>
     </thead>
     </tbody>
+
 @foreach (var p in Model.CartItems)
 { 
         <tr>
@@ -24,9 +24,24 @@
             <th scope="col">@p.Product.Name</th> <!-- maybe make clickable to go to details?-->
             <th scope="col">@p.Quantity</th>
             <th scope="col">@p.Product.Price</th>
+            
+            <th scope="col"><a href="/Cart/Delete?id=@p.ProductFk" class="btn btn-danger">Remove</a></th>
+
         </tr>
 }
+    @{var x = 0.0; }
+@foreach (var c in Model.CartItems)
+{
+    x = x + (c.Product.Price * c.Quantity);
+}
+            <th scope="col">Order Total: €@x  </th>
     </tbody>
 </table>
+<div class="text-center">
+    <br />
+    <a href="/Cart/Checkout" class="btn btn-danger">Checkout</a>
+</div>
+
+
 
 

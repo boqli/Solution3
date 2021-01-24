@@ -15,5 +15,7 @@ namespace ShoppingCart.Application.Interfaces
         public IQueryable<CartViewModel> GetItems();
         //public CartViewModel getCartId(string email);
 
+        void DeleteProduct(Guid id);
+
     }
 }

@@ -8,7 +8,6 @@ namespace ShoppingCart.Domain.Interfaces
 {
     public interface IOrdersRepository
     {
-        Guid AddOrder(Order order);
 
         void AddOrderDetail(OrderDetails orderDetails);
 
@@ -22,7 +21,7 @@ namespace ShoppingCart.Domain.Interfaces
 
         Order GetOrder(Order o);
 
-        Order AddOder(Order o);
+        IQueryable<Order> AddOrder(Order o);
 
     }
 }

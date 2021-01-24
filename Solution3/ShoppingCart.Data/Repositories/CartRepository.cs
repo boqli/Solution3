@@ -29,5 +29,19 @@ namespace ShoppingCart.Data.Repositories
         {
             return _context.Carts;
         }
+
+        public void DeleteProduct(CartItem p)
+        {
+            //ShoppingCartDbContext context = new ShoppingCartDbContext();
+            _context.CartItems.Remove(p);
+            _context.SaveChanges(); //this will save permanently into the db
+        }
+
+        public CartItem GetProduct(Guid id)
+        {
+            //ShoppingCartDbContext context = new ShoppingCartDbContext();
+            //single or default will return ONE product! or null
+            return _context.CartItems.SingleOrDefault(x => x.ProductFk == id);
+        }
     }
 }

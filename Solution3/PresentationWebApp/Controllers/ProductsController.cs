@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
+using ShoppingCart.Data.Context;
 using ShoppingCart.Domain.Models;
 
 namespace PresentationWebApp.Controllers
@@ -18,21 +19,24 @@ namespace PresentationWebApp.Controllers
         private readonly ICartService _cartService;
         private readonly ICategoriesService _categoriesService;
         private IWebHostEnvironment _env;
+        private ShoppingCartDbContext _context;
         public ProductsController(IProductsService productsService, ICategoriesService categoriesService, ICartService cartService,
-             IWebHostEnvironment env )
+             IWebHostEnvironment env, ShoppingCartDbContext context)
         {
             _productsService = productsService;
             _categoriesService = categoriesService;
             _env = env;
             _cartService = cartService;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int pageNumber=1)
         {
             var list = _productsService.GetProducts();
             var listOfCategeories = _categoriesService.GetCategories();
             ViewBag.Categories = listOfCategeories;
-            return View(list);
+            return View( list);
+            //await PaginatedList<Product>.CreateAsync(_context.Products,pageNumber,10)
         }
 
         [HttpPost]

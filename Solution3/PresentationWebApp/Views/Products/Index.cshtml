@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<ShoppingCart.Application.ViewModels.ProductViewModel>
 
-@{
-    ViewData["Title"] = "Index";
-}
+@{ ViewData["Title"] = "Index"; }
 
 <h1>Products Catalogue</h1>
 
@@ -12,17 +10,15 @@
 
     @if (User.IsInRole("Admin"))
     {
-        <a href="/Products/create" class="btn btn-warning">Create</a>
-    }
+<a href="/Products/create" class="btn btn-warning">Create</a>}
 
 </div>
 
 <div class="container">
     <div class="row">
 
-       @Html.Partial("ViewProductsPartial", Model)
+        @Html.Partial("ViewProductsPartial", Model)
     </div>
 </div>
 
-
-
+<!--Html.Partial("PageView")-->

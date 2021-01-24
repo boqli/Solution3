@@ -18,12 +18,11 @@ namespace ShoppingCart.Data.Repositories
             _context = context;
         }
 
-        public Guid AddOrder(Order order)
+        public IQueryable<Order> AddOrder(Order order)
         {
             _context.Orders.Add(order);
             _context.SaveChanges();
-            return order.Id;
-            //throw new NotImplementedException();
+            return _context.Orders;
         }
 
         public void AddOrderDetail(OrderDetails orderDetails)
@@ -58,12 +57,6 @@ namespace ShoppingCart.Data.Repositories
             //ShoppingCartDbContext context = new ShoppingCartDbContext();
             return _context.Orders;
         }
-
-        Order IOrdersRepository.AddOder(Order o)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 
 }

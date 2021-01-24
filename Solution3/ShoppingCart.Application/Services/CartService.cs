@@ -16,6 +16,7 @@ namespace ShoppingCart.Application.Services
         private IMapper _mapper;
         private ICartRepository _cartRepo;
         private ICategoriesRepository _categoriesRepo;
+        private IProductsRepository _productRepo;
         public CartService(ICartRepository cartRepository, IMapper mapper, ICategoriesRepository categoriesRepo)
         {
             _cartRepo = cartRepository;
@@ -37,6 +38,15 @@ namespace ShoppingCart.Application.Services
             return products;
         }
 
+        public void DeleteProduct(Guid id)
+        {
+            var pToDelete = _cartRepo.GetProduct(id);
+
+            if (pToDelete != null)
+            {
+                _cartRepo.DeleteProduct(pToDelete);
+            }
+        }
 
         /*
         public CartViewModel getCartId(string email)

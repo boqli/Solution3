@@ -54,18 +54,7 @@ namespace PresentationWebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Checkout()
-        {
-            try
-            {
-                return View();
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                return RedirectToAction("Error", "Home");
-            }
-        }
+       
 
 
     }
