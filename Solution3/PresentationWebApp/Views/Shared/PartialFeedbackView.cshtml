@@ -1,0 +1,13 @@
+﻿@if (TempData["feedback"] != null)
+{
+    <div class="alert alert-primary" role="alert">
+        @TempData["feedback"]
+    </div>
+}
+
+@if (TempData["warning"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["warning"]
+    </div>
+}

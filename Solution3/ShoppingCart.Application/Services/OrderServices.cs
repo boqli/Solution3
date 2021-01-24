@@ -107,9 +107,11 @@ namespace ShoppingCart.Application.Services
         }
 
         //OrderViewModel minflok void
-        public void GetOrder(string email)
+        public OrderViewModel GetOrder(string email)
         {
-            //throw new NotImplementedException();
+            var myOrder = _ordersRepo.GetOrder(email);
+            var result = _mapper.Map<OrderViewModel>(myOrder);
+            return result;
         }
 
         public void AddOrder(OrderViewModel order)

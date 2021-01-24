@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoppingCart.Domain.Models
+namespace PresentationWebApp.Models
 {
-    public class PaginatedList<T> : List<T>
+    public class PagingList<T> : List<T>
     {
-
+        //https://www.youtube.com/watch?v=P-uxPyF9Icg&feature=emb_logo&ab_channel=ASP.NETMVC
         public int PageIndex { get; private set; }
 
         public int TotalPages { get; set; }
 
-        public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
+        public PagingList(List<T> items, int count, int pageIndex, int pageSize)
         {
             PageIndex = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
@@ -37,11 +37,11 @@ namespace ShoppingCart.Domain.Models
             }
         }
 
-        public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
+        public static async Task<PagingList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
             var count = await source.CountAsync();
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-            return new PaginatedList<T>(items, count, pageIndex, pageSize);
+            return new PagingList<T>(items, count, pageIndex, pageSize);
 
         }
 

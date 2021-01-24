@@ -1,8 +1,7 @@
 ﻿using ShoppingCart.Data.Context;
 using ShoppingCart.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ShoppingCart.Domain.Models;
+using System.Linq;
 
 namespace ShoppingCart.Data.Repositories
 {
@@ -15,5 +14,11 @@ namespace ShoppingCart.Data.Repositories
             _context = context;
         }
 
+        public IQueryable<OrderDetails> AddOrderDetails(OrderDetails od)
+        {
+            _context.OrderDetails.Add(od);
+            _context.SaveChanges();
+            return _context.OrderDetails;
+        }
     }
 }

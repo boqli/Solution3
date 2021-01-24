@@ -9,7 +9,6 @@ namespace ShoppingCart.Domain.Interfaces
     public interface IOrdersRepository
     {
 
-        void AddOrderDetail(OrderDetails orderDetails);
 
         //MIGHT JUST NEED THESE TWO
 
@@ -19,9 +18,9 @@ namespace ShoppingCart.Domain.Interfaces
 
         void DeleteProduct(Order o);
 
-        Order GetOrder(Order o);
-
         IQueryable<Order> AddOrder(Order o);
+
+        Order GetOrder(string email);
 
     }
 }

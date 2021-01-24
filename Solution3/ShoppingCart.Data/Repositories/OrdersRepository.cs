@@ -1,11 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ShoppingCart.Data.Context;
+﻿using ShoppingCart.Data.Context;
 using ShoppingCart.Domain.Interfaces;
 using ShoppingCart.Domain.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ShoppingCart.Data.Repositories
 {
@@ -25,11 +22,6 @@ namespace ShoppingCart.Data.Repositories
             return _context.Orders;
         }
 
-        public void AddOrderDetail(OrderDetails orderDetails)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteProduct(Order id)
         {
             //ShoppingCartDbContext context = new ShoppingCartDbContext();
@@ -37,9 +29,9 @@ namespace ShoppingCart.Data.Repositories
             _context.SaveChanges(); //this will save permanently into the db
         }
 
-        public Order GetOrder(Order o)
+        public Order GetOrder(string email)
         {
-            throw new NotImplementedException();
+            return _context.Orders.SingleOrDefault(x => x.UserEmail == email);
         }
 
         public Order GetProduct(Guid id)
@@ -57,6 +49,7 @@ namespace ShoppingCart.Data.Repositories
             //ShoppingCartDbContext context = new ShoppingCartDbContext();
             return _context.Orders;
         }
+        
     }
 
 }

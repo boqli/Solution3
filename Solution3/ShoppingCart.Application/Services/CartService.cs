@@ -48,7 +48,7 @@ namespace ShoppingCart.Application.Services
             }
         }
 
-        /*
+        /*might work idfk
         public CartViewModel getCartId(string email)
         {
             var products = _cartRepo.getCartId().Where(x => x.Email.Contains(email))

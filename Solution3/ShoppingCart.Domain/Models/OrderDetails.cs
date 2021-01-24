@@ -26,9 +26,6 @@ namespace ShoppingCart.Domain.Models
         [Required]
         public double Price { get; set; }
 
-        [DefaultValue(false)]
-        public bool Disable { get; set; }
-
         [Required]
         public Guid OrderId { get; set; }
 

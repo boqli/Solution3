@@ -10,8 +10,8 @@ using ShoppingCart.Data.Context;
 namespace ShoppingCart.Data.Migrations
 {
     [DbContext(typeof(ShoppingCartDbContext))]
-    [Migration("20210122155115_something")]
-    partial class something
+    [Migration("20210124133058_addingGuidToOrderDetails")]
+    partial class addingGuidToOrderDetails
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,15 +32,7 @@ namespace ShoppingCart.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProductFk")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("Carts");
                 });
@@ -126,10 +118,9 @@ namespace ShoppingCart.Data.Migrations
 
             modelBuilder.Entity("ShoppingCart.Domain.Models.OrderDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Disable")
                         .HasColumnType("bit");
@@ -195,17 +186,10 @@ namespace ShoppingCart.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ShoppingCart.Domain.Models.Cart", b =>
-                {
-                    b.HasOne("ShoppingCart.Domain.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-                });
-
             modelBuilder.Entity("ShoppingCart.Domain.Models.CartItem", b =>
                 {
                     b.HasOne("ShoppingCart.Domain.Models.Cart", "Cart")
-                        .WithMany()
+                        .WithMany("CartItems")
                         .HasForeignKey("CartIdFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

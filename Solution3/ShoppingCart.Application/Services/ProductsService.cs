@@ -57,7 +57,6 @@ namespace ShoppingCart.Application.Services
 
         }
 
-
         public ProductViewModel GetProduct(Guid id)
         {
             //AutoMapper
@@ -81,7 +80,6 @@ namespace ShoppingCart.Application.Services
             return products;
 
         }
-
 
         public IQueryable<ProductViewModel> GetProducts(int category)
         {

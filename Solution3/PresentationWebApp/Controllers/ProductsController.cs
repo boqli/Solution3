@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PresentationWebApp.Models;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
 using ShoppingCart.Data.Context;
@@ -35,17 +36,17 @@ namespace PresentationWebApp.Controllers
             var list = _productsService.GetProducts();
             var listOfCategeories = _categoriesService.GetCategories();
             ViewBag.Categories = listOfCategeories;
-            return View( list);
+            return View(await PagingList<ProductViewModel>.CreateAsync(list, pageNumber, 10));
             //await PaginatedList<Product>.CreateAsync(_context.Products,pageNumber,10)
         }
 
         [HttpPost]
-        public IActionResult Search(string keyword) //using a form, and the drop down select list must have name attribute = to category
+        public async Task<IActionResult> Search(string keyword, int pageNumber =1) //using a form, and the drop down select list must have name attribute = to category
         {
             var list = _productsService.GetProducts(keyword);
             var listOfCategeories = _categoriesService.GetCategories();
             ViewBag.Categories = listOfCategeories;
-            return View("Index", list);
+            return View("Index", await PagingList<ProductViewModel>.CreateAsync(list, pageNumber, 10));
         }
 
         //use this for cartitem view model return cartviewmodel
@@ -101,6 +102,7 @@ namespace PresentationWebApp.Controllers
             {
                 //log error
                 TempData["warning"] = "Product was not added! "+ex;
+                return RedirectToAction("error", "Home");
             }
 
            var listOfCategeories = _categoriesService.GetCategories();
@@ -122,6 +124,7 @@ namespace PresentationWebApp.Controllers
                 //log your error 
 
                 TempData["warning"] = "Product was not deleted" + ex; //Change from ViewData to TempData
+                return RedirectToAction("error", "Home");
             }
 
             return RedirectToAction("Index");
@@ -141,6 +144,7 @@ namespace PresentationWebApp.Controllers
                 //log your error 
 
                 TempData["warning"] = "Product was not disabled" + ex; //Change from ViewData to TempData
+                return RedirectToAction("error", "Home");
             }
 
             return RedirectToAction("Index");
@@ -148,16 +152,16 @@ namespace PresentationWebApp.Controllers
 
 
         [HttpPost]
-        public IActionResult searchByCategory(int category)
+        public async Task<IActionResult> searchByCategory(int category, int pageNumber=1)
         {
             var list = _productsService.GetProducts(category);
             var listOfCategeories = _categoriesService.GetCategories();
             ViewBag.Categories = listOfCategeories;
 
-            return View("Index", list);
+            return View("Index", await PagingList<ProductViewModel>.CreateAsync(list, pageNumber, 10));
         }
 
-
+        
 
         
 

@@ -19,6 +19,8 @@ namespace ShoppingCart.Application.Interfaces
 
         void AddOrder(OrderViewModel order);
 
+        OrderViewModel GetOrder(string email);
+
 
     }
 }

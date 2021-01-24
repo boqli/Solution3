@@ -17,13 +17,15 @@ namespace PresentationWebApp.Controllers
         private IOrdersService _ordersService;
         private ICategoriesService _categoriesService;
         private ICartService _cartService;
+        private IOrderDetailsService _orderDetailsService;
 
-        public CartController(IProductsService productsService, IOrdersService ordersService, ICartService cartService, ICategoriesService categoriesService)
+        public CartController(IProductsService productsService, IOrderDetailsService orderDetailsService, IOrdersService ordersService, ICartService cartService, ICategoriesService categoriesService)
         {
             _productsService = productsService;
             _ordersService = ordersService;
             _cartService = cartService;
             _categoriesService = categoriesService;
+            _orderDetailsService = orderDetailsService;
 
         }
 
@@ -32,21 +34,15 @@ namespace PresentationWebApp.Controllers
             var list = _cartService.GetItems().FirstOrDefault();
             return View(list);
         }
-        /*
-        public ProductViewModel getCardId(Guid id)
-        {
-            ProductViewModel p = _productsService.GetProduct(id);
-            return p.Id;
-        }
-        */
 
         /*
         public CartItemViewModel getCartId(string email)
         {
-            CartItemViewModel c = _cartService
+            CartViewModel c = _cartService
 
         }
         */
+
         //[HttpPost]
         public IActionResult AddToCart(Guid id)
         {
@@ -59,7 +55,7 @@ namespace PresentationWebApp.Controllers
                 {
                     ItemId = 0,
                     Quantity = 1,
-                    CartIdFK = 1, //create a method to get current cart, rename to cart
+                    CartIdFK = 1, //create a method to get current cart, rename to cart (get card via email , if cart exist use that, if not create cart)
                     DateCreated = DateTime.Now,
                     ProductFk = id
                 };
@@ -71,7 +67,9 @@ namespace PresentationWebApp.Controllers
             catch (Exception ex)
             {
                 //log error
+
                 TempData["warning"] = "Product was not added! " + ex;
+                return RedirectToAction("error", "Home");
             }
 
             return RedirectToAction("Index","Products");
@@ -89,6 +87,7 @@ namespace PresentationWebApp.Controllers
                 //log your error 
 
                 TempData["warning"] = "Product was not removed from cart" + ex; //Change from ViewData to TempData
+                return RedirectToAction("error", "Home");
             }
 
             return RedirectToAction("Index");
@@ -99,22 +98,36 @@ namespace PresentationWebApp.Controllers
         {
             try
             {
+                var n =_cartService.GetItems().Where(x => x.Email == User.Identity.Name).FirstOrDefault();
+                //var ord = _ordersService.GetOrder(User.Identity.Name);
+
+                var email = User.Identity.Name;
                 //getcart id
                 //var cart = _productsService.GetProduct(id);
                 //var cartId= GetCart(); implmement
 
                 var order = new OrderViewModel()
                 {
-                    UserEmail = User.Identity.Name,
+                    UserEmail = email,
                     DatePlaced = DateTime.Now
                 };
 
-                var orderDetailsc = new OrderDetailsViewModel()
-                {
-
-                };
-
                 _ordersService.AddOrder(order);
+                /*
+                var orderid = _ordersService.GetOrder(email).Id;
+                
+                foreach (var x in n.CartItems)
+                {
+                    var orderDetails = new OrderDetailsViewModel()
+                    {
+                         Price = x.Product.Price,
+                         Quantity = x.Quantity,
+                         ProductFk = x.Product.Id,
+                         OrderId = order.Id
+                    };
+                    _orderDetailsService.AddOrderDetails(orderDetails);
+                }
+                */
 
                 TempData["feedback"] = "Order was added successfully";
             }
@@ -122,12 +135,10 @@ namespace PresentationWebApp.Controllers
             {
                 //log error
                 TempData["warning"] = "Order was not added! " + ex;
+                return RedirectToAction("error", "Home");
             }
 
             return RedirectToAction("Index", "Products");
-
-
-
             /*
             if (_ordersService.Checkout(User.Identity.Name))
             {
