@@ -27,6 +27,7 @@ namespace ShoppingCart.Domain.Models
         public double Price { get; set; }
 
         [Required]
+        [ForeignKey("Order")]
         public Guid OrderId { get; set; }
 
     }

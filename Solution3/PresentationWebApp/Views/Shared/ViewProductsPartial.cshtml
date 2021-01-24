@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<ShoppingCart.Application.ViewModels.ProductViewModel>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @foreach (var p in Model)
 {
@@ -13,11 +16,14 @@
             <hr />
             <a href="/Products/Details?id=@p.Id" type="button" class="btn btn-primary">View Specification</a>
             <hr />
-            <a href="/Cart/AddToCart?id=@p.Id" type="button" class="btn btn-warning">Add to Cart</a>
+            @if (SignInManager.IsSignedIn(User))
+            {
+<a href="/Cart/AddToCart?id=@p.Id" type="button" class="btn btn-warning">Add to Cart</a>}
+
             @if (User.IsInRole("Admin"))
             {
-                <hr />
-                <a href="/Products/DisableProduct?id=@p.Id" class="btn btn-danger">Disable</a>}
+<hr />
+                        <a href="/Products/DisableProduct?id=@p.Id" class="btn btn-danger">Disable</a>}
         </div>
     </div>
 </div>}}
